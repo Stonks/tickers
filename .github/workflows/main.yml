@@ -21,7 +21,7 @@ jobs:
         node-version: '14'
         check-latest: true
     - run: npm install
-    - run: NYSE_API_URL=${{ secrets.NYSE_API_URL }} NASDAQ_API_URL=${{ secrets.NASDAQ_API_URL }} DATA_API_URL=${{ secrets.DATA_API_URL }} node index.js
+    - run: NYSE_API_URL='${{ secrets.NYSE_API_URL }}' NASDAQ_API_URL='${{ secrets.NASDAQ_API_URL }}' DATA_API_URL='${{ secrets.DATA_API_URL }}' node index.js
     - name: Commit files
       run: |
         git config --local user.email "action@github.com"
