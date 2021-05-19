@@ -22,12 +22,10 @@ jobs:
         check-latest: true
     - run: npm install
     - run: NYSE_API_URL='${{ secrets.NYSE_API_URL }}' NASDAQ_API_URL='${{ secrets.NASDAQ_API_URL }}' DATA_API_URL='${{ secrets.DATA_API_URL }}' node index.js
-    - name: Commit files
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git diff --quiet && git diff --staged --quiet || git commit -a -m "Auto-update of the data packages"
-    - name: Push changes
-      uses: ad-m/github-push-action@master
+    - name: Commit changes
+      uses: EndBug/add-and-commit@v7
       with:
-        github_token: ${{ secrets.GH }}
+        author_name: Gennaro Napolitano
+        author_email: stonks@gennaro.me
+        message: 'updated on ${{ steps.date.outputs.date }}'
+        add: '.'
