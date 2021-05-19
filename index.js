@@ -2,6 +2,7 @@ const axios = require('axios');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const jsdom = require('jsdom');
 const {JSDOM} = jsdom;
+const fs = require('fs');
 
 async function main() {
 
@@ -56,9 +57,9 @@ async function resolvePromises(promises, exchange) {
 }
 
 async function csvWrite(ticker, exchange, records) {
-
+    const path = `./tickers/${exchange}/`
     const csvWriter = createCsvWriter({
-        path: `./tickers/${exchange}/${ticker}.csv`,
+        path: `${path}${ticker}.csv`,
         header: [
             {id: 'd', title: 'DATE'},
             {id: 'o', title: 'OPEN'},
@@ -67,6 +68,10 @@ async function csvWrite(ticker, exchange, records) {
             {id: 'c', title: 'CLOSE'},
         ]
     });
+
+    if (!fs.existsSync(path)){
+        fs.mkdirSync(path, { recursive: true });
+    }
 
     await csvWriter.writeRecords(records).catch(() => console.log('error:', ticker));
 
