@@ -1,2 +1,4 @@
 # tickers
-All historical ticker data the NASDAQ and NYSE
+historical ticker data for the NASDAQ and NYSE.
+
+More to come soon!
