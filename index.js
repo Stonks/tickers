@@ -26,7 +26,11 @@ async function createPromises(tickers, exchange) {
     for (let i = 0; i < tickers.length; i++) {
         let ticker = tickers[i].symbol;
 
-        promises.push(axios.get(DATA_API_URL + ticker.replace('^', '.').replace('/', '.').toLowerCase()));
+        promises.push(axios.get(DATA_API_URL + ticker.replace('^', '.').replace('/', '.').toLowerCase(), {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
+            }
+        }));
 
         if ((promises.length !== 0 && i % 50 === 0) || i === tickers.length - 1) {
             console.log(`progress:  ${i}/${tickers.length}`);
@@ -52,6 +56,9 @@ async function resolvePromises(promises, exchange) {
             } else console.log('error:', ticker);
         }
 
+    }).catch(e => {
+        console.log("Oopsie!!")
+        process.exit(1);
     });
 
 }
