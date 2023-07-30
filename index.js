@@ -58,6 +58,7 @@ async function resolvePromises(promises, exchange) {
 
     }).catch(e => {
         console.log("Oopsie!!")
+        console.log(e);
         process.exit(1);
     });
 
