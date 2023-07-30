@@ -58,7 +58,6 @@ async function resolvePromises(promises, exchange) {
 
     }).catch(e => {
         console.log("Oopsie!!")
-        console.log(e);
         process.exit(1);
     });
 
@@ -74,6 +73,8 @@ async function csvWrite(ticker, exchange, records) {
             {id: 'h', title: 'HIGH'},
             {id: 'l', title: 'LOW'},
             {id: 'c', title: 'CLOSE'},
+            {id: 'v', title: 'VOLUME'},
+            {id: 'ma50', title: 'MA50'}
         ]
     });
 
