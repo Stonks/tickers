@@ -46,14 +46,25 @@ async function resolvePromises(promises, exchange) {
     await Promise.allSettled(promises).then(async (values) => {
 
         for (let res of values) {
-            let ticker = res.value.config.url.split('t=')[1];
-            if (res.value.data !== '') {
-                const dom = new JSDOM(res.value.data, {
-                    runScripts: "dangerously",
-                    virtualConsole: new jsdom.VirtualConsole()
-                });
-                await csvWrite(ticker.toUpperCase(), exchange, dom.window.dataDaily);
-            } else console.log('error:', ticker);
+            if(res.value !== undefined) {
+
+                let ticker = res.value.config.url.split('t=')[1];
+                if (res.value.data !== '') {
+                    const dom = new JSDOM(res.value.data, {
+                        runScripts: "dangerously",
+                        virtualConsole: new jsdom.VirtualConsole()
+                    });
+                    await csvWrite(ticker.toUpperCase(), exchange, dom.window.dataDaily);
+                } else {
+                    console.log('error:', ticker);
+                }
+
+            } else {
+                console.log("Response error: ");
+                console.log(res);
+                process.exit(1);
+            }
+            
         }
 
     }).catch(e => {
